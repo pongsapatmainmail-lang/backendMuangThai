@@ -1,15 +1,41 @@
+# products/createsuperuser_on_startup.py
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 def create_default_superuser():
-    username = "adminkenjin"
-    email = "adminjinxken@gmail.com"
-    password = "280440jinx@"
+    username = "adminkenjinxxx"
+    email = "adminkenjin@example.com"
+    password = "280440Ken@"  # ตั้งรหัสผ่านใหม่ทุกครั้ง
 
-    # ตรวจสอบว่ามี user อยู่แล้วหรือยัง
-    if not User.objects.filter(username=username).exists() and not User.objects.filter(email=email).exists():
+    user_qs = User.objects.filter(username=username)
+    if not user_qs.exists():
         print("Creating default superuser...")
-        User.objects.create_superuser(username=username, email=email, password=password)
+        User.objects.create_superuser(
+            username=username,
+            email=email,
+            password=password,
+            is_staff=True,
+            is_active=True,
+            is_superuser=True
+        )
+        print(f"Superuser '{username}' created with password: {password}")
     else:
-        print("Superuser already exists. Skipping creation.")
+        user = user_qs.first()
+        updated = False
+        # ตรวจสอบและแก้ไขสิทธิ์
+        if not user.is_staff:
+            user.is_staff = True
+            updated = True
+        if not user.is_superuser:
+            user.is_superuser = True
+            updated = True
+        if not user.is_active:
+            user.is_active = True
+            updated = True
+        # Reset password
+        user.set_password(password)
+        updated = True
+        if updated:
+            user.save()
+            print(f"Updated superuser '{username}' and reset password to: {password}")
