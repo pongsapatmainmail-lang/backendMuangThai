@@ -24,7 +24,6 @@ class ProductViewSet(viewsets.ModelViewSet):
     def categories(self, request):
         """ดึงรายการหมวดหมู่ทั้งหมด"""
         categories = Product.objects.values_list('category', flat=True).distinct()
-        # นับจำนวนสินค้าในแต่ละหมวด
         category_counts = []
         for cat in categories:
             count = Product.objects.filter(category=cat).count()
