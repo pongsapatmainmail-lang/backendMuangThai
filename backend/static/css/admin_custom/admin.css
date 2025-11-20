@@ -1,0 +1,54 @@
+/* พื้นหลังด้านบนของ Django Admin */
+#header {
+    background: #ee4d2d !important;
+    color: white !important;
+    padding: 15px;
+}
+
+/* เปลี่ยนสีโลโก้ Admin */
+#branding h1 a {
+    color: white !important;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+/* ปุ่มต่างๆ */
+.button, input[type=submit], .submit-row input {
+    background: #ee4d2d !important;
+    border: none !important;
+    padding: 8px 14px !important;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white !important;
+    transition: 0.2s;
+}
+
+.button:hover, input[type=submit]:hover {
+    background: #d73211 !important;
+}
+
+/* ตารางให้ทันสมัย */
+table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table thead th {
+    background: #fff0ec !important;
+    color: #333 !important;
+    padding: 10px;
+}
+
+table tbody tr:hover {
+    background: #fff6f3 !important;
+}
+
+/* Sidebar */
+#nav-sidebar {
+    background: white !important;
+    border-right: 1px solid #eee;
+}
+
+#nav-sidebar .current-app h2 {
+    color: #ee4d2d !important;
+}

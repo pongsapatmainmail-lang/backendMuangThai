@@ -9,7 +9,7 @@ from pathlib import Path
 import dj_database_url
 from datetime import timedelta
 
-# Paths
+# BASE DIRECTORY
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -23,6 +23,7 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(','
 
 # Application definition
 INSTALLED_APPS = [
+    # Default Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +48,10 @@ AUTH_USER_MODEL = 'users.User'
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+
+    # เพิ่ม WhiteNoise เพื่อให้ staticfiles ทำงานบน Render
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,7 +65,12 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+
+        # ใช้ template override (สำหรับ Django Admin เปลี่ยนธีม)
+        'DIRS': [
+            BASE_DIR / 'templates',  # เปิดสำหรับไฟล์ base_site.html
+        ],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,15 +84,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
-# Database (Render Compatible)
+# Database (ใช้ Render ได้)
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', f'sqlite:///{BASE_DIR}/db.sqlite3'),
+        default=os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR}/db.sqlite3"),
         conn_max_age=600
     )
 }
-
 
 # Password Validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -92,32 +100,34 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bangkok'
 USE_I18N = True
 USE_TZ = True
 
-
-# Static files
+# Static Files (CSS, JS for Django + Admin)
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# รองรับ static ในแต่ละแอป + public static (เช่น admin.css)
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# ทำให้ static ทำงานบน Render
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
-# Media files (รูปภาพสินค้า)
+# Media Files (รูปภาพสินค้า)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
-# CORS
+# CORS (เชื่อมต่อกับ React frontend)
 CORS_ALLOWED_ORIGINS = os.environ.get(
-    'CORS_ALLOWED_ORIGINS',
+    'CORS_ALLOWED_ORIGINS', 
     'http://localhost:3000'
 ).split(',')
 CORS_ALLOW_CREDENTIALS = True
-
 
 # REST Framework
 REST_FRAMEWORK = {
@@ -140,3 +150,4 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
 }
+

@@ -1,0 +1,15 @@
+/* เปลี่ยนพื้นหลังหน้า admin */
+body {
+    background-color: #f5f5f5;
+}
+
+/* เปลี่ยนสีหัวข้อ module */
+.module h2 {
+    color: #ee4d2d;
+}
+
+/* ปุ่มบันทึกสีฟ้า */
+button, .submit-row input {
+    background-color: #667eea;
+    color: white;
+}
