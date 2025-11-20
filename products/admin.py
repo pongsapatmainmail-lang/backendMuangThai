@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Product
 from .shop_models import Shop
-
+from django.utils.html import format_html
 
 # ========== SHOP ADMIN ==========
 @admin.register(Shop)
@@ -24,16 +24,26 @@ class ShopAdmin(admin.ModelAdmin):
         }),
     )
 
+    actions = ['activate_shops', 'deactivate_shops']
+
+    def activate_shops(self, request, queryset):
+        queryset.update(is_active=True)
+    activate_shops.short_description = "Activate selected shops"
+
+    def deactivate_shops(self, request, queryset):
+        queryset.update(is_active=False)
+    deactivate_shops.short_description = "Deactivate selected shops"
+
 
 # ========== PRODUCT ADMIN ==========
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'shop', 'price', 'stock', 'category', 'created_at']
+    list_display = ['name', 'shop', 'price', 'stock', 'category', 'image_preview', 'created_at']
     list_filter = ['category', 'shop', 'created_at']
-    search_fields = ['name', 'description', 'shop__name']
+    search_fields = ['name', 'description', 'shop__name', 'category__name']
     ordering = ['-created_at']
 
-    readonly_fields = ['created_at', 'updated_at']
+    readonly_fields = ['created_at', 'updated_at', 'image_preview']
 
     fieldsets = (
         ("ข้อมูลสินค้า", {
@@ -43,9 +53,15 @@ class ProductAdmin(admin.ModelAdmin):
             "fields": ("price", "stock")
         }),
         ("รูปภาพสินค้า", {
-            "fields": ("image",)
+            "fields": ("image", "image_preview")
         }),
         ("วัน–เวลา", {
             "fields": ("created_at", "updated_at")
         }),
     )
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="width: 100px; height:auto;" />', obj.image.url)
+        return "(ไม่มีรูป)"
+    image_preview.short_description = "Preview"
