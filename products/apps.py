@@ -5,6 +5,5 @@ class ProductsConfig(AppConfig):
     name = 'products'
 
     def ready(self):
-        # เรียกฟังก์ชันสร้าง superuser
         from .createsuperuser_on_startup import create_default_superuser
         create_default_superuser()
