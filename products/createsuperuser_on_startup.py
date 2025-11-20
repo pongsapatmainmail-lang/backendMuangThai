@@ -3,8 +3,8 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 def create_default_superuser():
-    username = "adminken"
-    email = "adminjinx@gmail.com"
+    username = "adminkenjin"
+    email = "adminjinxken@gmail.com"
     password = "280440jinx@"
 
     # ตรวจสอบว่ามี user อยู่แล้วหรือยัง
