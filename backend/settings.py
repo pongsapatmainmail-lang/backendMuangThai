@@ -63,15 +63,16 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-
-        # ใช้ template override (สำหรับ Django Admin เปลี่ยนธีม)
+        
+        # ใช้ template override (สำหรับ Django Admin และ Dashboard)
         'DIRS': [
-            BASE_DIR / 'templates',  # เปิดสำหรับไฟล์ base_site.html
+            BASE_DIR / 'templates',  # สำหรับไฟล์ template ทั้งหมด
         ],
-
+        
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',  # เพิ่มบรรทัดนี้
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
