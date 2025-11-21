@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}Admin | Shopee Style{% endblock %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'admin_custom/admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="/admin/">🛍️ Shopee Admin Panel</a>
+</h1>
+{% endblock %}
