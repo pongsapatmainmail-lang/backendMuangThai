@@ -164,9 +164,11 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "ยินดีต้อนรับสู่ระบบจัดการร้านค้า MuangThai",
     
     # ไม่ใช้โลโก้
-    "site_logo": None,
-    "login_logo": None,
+    "site_logo": "https://img2.pic.in.th/pic/login80c7fe365113484b.png",
+    "login_logo": "https://img5.pic.in.th/file/secure-sv1/sidebar.png",
     "site_icon": None,
+
+    "site_logo_classes": "img-circle",  # ทำให้โลโก้เป็นวงกลม (ถ้าต้องการ)
     
     # ข้อความลิขสิทธิ์
     "copyright": "Sunfun Shop",
