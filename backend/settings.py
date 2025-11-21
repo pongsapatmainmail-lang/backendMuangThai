@@ -24,6 +24,7 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(','
 # Application definition
 INSTALLED_APPS = [
     # Default Django apps
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -151,3 +152,121 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
 }
 
+# Jazzmin Settings
+JAZZMIN_SETTINGS = {
+    # ชื่อเว็บไซต์
+    "site_title": "My Shop Admin",
+    "site_header": "My Shop",
+    "site_brand": "My Shop Administration",
+    "site_logo": None,  # ใส่ path รูปโลโก้ได้ เช่น "images/logo.png"
+    "login_logo": None,
+    "site_icon": None,
+    
+    # ข้อความต้อนรับ
+    "welcome_sign": "ยินดีต้อนรับสู่ระบบจัดการร้านค้า",
+    
+    # ข้อความลิขสิทธิ์
+    "copyright": "My Shop Ltd",
+    
+    # ค้นหา Model
+    "search_model": ["auth.User", "products.Product", "orders.Order"],
+    
+    # ผู้ใช้ที่จะแสดง
+    "user_avatar": None,
+    
+    ############
+    # Top Menu #
+    ############
+    "topmenu_links": [
+        {"name": "หน้าแรก", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "ดูเว็บไซต์", "url": "/", "new_window": True},
+        {"model": "auth.User"},
+        {"app": "products"},
+    ],
+    
+    #############
+    # Side Menu #
+    #############
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    
+    # จัดลำดับแอพในเมนู
+    "order_with_respect_to": ["auth", "products", "orders", "users"],
+    
+    # ไอคอนของแต่ละ Model/App
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        
+        "users.user": "fas fa-user-circle",
+        
+        "products.product": "fas fa-box",
+        "products.category": "fas fa-tags",
+        
+        "orders.order": "fas fa-shopping-cart",
+        "orders.orderitem": "fas fa-list",
+        "orders.notification": "fas fa-bell",
+    },
+    
+    # ไอคอน Default
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+    
+    #################
+    # Related Modal #
+    #################
+    "related_modal_active": False,
+    
+    #############
+    # UI Tweaks #
+    #############
+    "custom_css": None,
+    "custom_js": None,
+    "use_google_fonts_cdn": True,
+    "show_ui_builder": False,
+    
+    ###############
+    # Change view #
+    ###############
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {
+        "auth.user": "collapsible",
+        "auth.group": "vertical_tabs"
+    },
+}
+
+# ธีม UI
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-navy",
+    "accent": "accent-primary",
+    "navbar": "navbar-navy navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-navy",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "flatly",  # cosmo, flatly, simplex, darkly, slate, superhero
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}
